@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación Multifuncional</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6004c4 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: white;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: rgba(201, 73, 73, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .menu {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .menu-btn {
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .menu-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+        
+        .menu-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        
+        .content {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            min-height: 500px;
+            width: 100%;
+        }
+        
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Estilos para la calculadora */
+        .calculator {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .display {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: right;
+            font-size: 2rem;
+            min-height: 80px;
+            word-wrap: break-word;
+            overflow: hidden;
+        }
+        
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        .calc-btn {
+            padding: 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .calc-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .calc-btn.operator {
+            background: rgba(255, 165, 0, 0.7);
+        }
+        
+        .calc-btn.operator:hover {
+            background: rgba(255, 165, 0, 0.9);
+        }
+        
+        .calc-btn.equals {
+            background: rgba(0, 150, 0, 0.7);
+            grid-column: span 2;
+        }
+        
+        .calc-btn.equals:hover {
+            background: rgba(0, 150, 0, 0.9);
+        }
+        
+        /* Estilos para el traductor */
+        .translator {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .translator-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .language-selector {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .lang-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .input-area, .output-area {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 150px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 120px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            resize: none;
+            outline: none;
+        }
+        
+        .translate-btn {
+            padding: 15px 30px;
+            background: rgba(0, 150, 0, 0.7);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .translate-btn:hover {
+            background: rgba(0, 150, 0, 0.9);
+        }
+        
+        /* Estilos para la sopa de letras */
+        .word-search {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .word-search-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .words-list {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .words-list h3 {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .word-item {
+            padding: 5px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .word-item.found {
+            background: rgba(0, 150, 0, 0.3);
+            text-decoration: line-through;
+        }
+        
+        .grid-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(15, 30px);
+            grid-template-rows: repeat(15, 30px);
+            gap: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        .grid-cell {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s ease;
+        }
+        
+        .grid-cell.selected {
+            background: rgba(255, 255, 0, 0.3);
+        }
+        
+        .grid-cell.found {
+            background: rgba(0, 150, 0, 0.3);
+        }
+        
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .control-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .word-search-info {
+                flex-direction: column;
+            }
+            
+            .word-grid {
+                grid-template-columns: repeat(15, 20px);
+                grid-template-rows: repeat(15, 20px);
+            }
+            
+            .grid-cell {
+                width: 20px;
+                height: 20px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Aplicación Multifuncional</h1>
+            <p class="subtitle">Calculadora, Traductor y Sopa de Letras en una sola aplicación</p>
+        </header>
+        
+        <div class="menu">
+            <button class="menu-btn active" data-section="calculator">Calculadora</button>
+            <button class="menu-btn" data-section="translator">Traductor Inglés-Español</button>
+            <button class="menu-btn" data-section="word-search">Sopa de Letras</button>
+        </div>
+        
+        <div class="content">
+            <!-- Sección de Calculadora -->
+            <div class="section calculator-section active" id="calculator">
+                <h2>Calculadora</h2>
+                <div class="calculator">
+                    <div class="display" id="calc-display">0</div>
+                    <div class="buttons">
+                        <button class="calc-btn clear">C</button>
+                        <button class="calc-btn backspace">⌫</button>
+                        <button class="calc-btn operator">%</button>
+                        <button class="calc-btn operator">÷</button>
+                        
+                        <button class="calc-btn">7</button>
+                        <button class="calc-btn">8</button>
+                        <button class="calc-btn">9</button>
+                        <button class="calc-btn operator">×</button>
+                        
+                        <button class="calc-btn">4</button>
+                        <button class="calc-btn">5</button>
+                        <button class="calc-btn">6</button>
+                        <button class="calc-btn operator">-</button>
+                        
+                        <button class="calc-btn">1</button>
+                        <button class="calc-btn">2</button>
+                        <button class="calc-btn">3</button>
+                        <button class="calc-btn operator">+</button>
+                        
+                        <button class="calc-btn">0</button>
+                        <button class="calc-btn">.</button>
+                        <button class="calc-btn equals">=</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sección de Traductor -->
+            <div class="section translator-section" id="translator">
+                <h2>Traductor Inglés-Español</h2>
+                <div class="translator">
+                    <div class="language-selector">
+                        <button class="lang-btn active" id="en-to-es">Inglés → Español</button>
+                        <button class="lang-btn" id="es-to-en">Español → Inglés</button>
+                    </div>
+                    <div class="translator-container">
+                        <div class="input-area">
+                            <textarea id="input-text" placeholder="Escribe el texto a traducir aquí..."></textarea>
+                        </div>
+                        <button class="translate-btn" id="translate-btn">Traducir</button>
+                        <div class="output-area">
+                            <textarea id="output-text" placeholder="La traducción aparecerá aquí..." readonly></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sección de Sopa de Letras -->
+            <div class="section word-search-section" id="word-search">
+                <h2>Sopa de Letras</h2>
+                <div class="word-search">
+                    <div class="word-search-info">
+                        <div class="words-list">
+                            <h3>Palabras a encontrar</h3>
+                            <div id="word-list">
+                                <!-- Las palabras se generarán con JavaScript -->
+                            </div>
+                        </div>
+                        <div class="game-stats">
+                            <p>Encontradas: <span id="found-count">0</span>/<span id="total-words">0</span></p>
+                            <p>Tiempo: <span id="timer">00:00</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid-container">
+                        <div class="word-grid" id="word-grid">
+                            <!-- La cuadrícula se generará con JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <button class="control-btn" id="new-game-btn">Nuevo Juego</button>
+                        <button class="control-btn" id="hint-btn">Pista</button>
+                        <button class="control-btn" id="solve-btn">Resolver</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navegación entre secciones
+        document.querySelectorAll('.menu-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remover clase activa de todos los botones
+                document.querySelectorAll('.menu-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Añadir clase activa al botón clickeado
+                button.classList.add('active');
+                
+                // Ocultar todas las secciones
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Mostrar la sección correspondiente
+                const sectionId = button.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+        
+        // Código para la calculadora
+        const calcDisplay = document.getElementById('calc-display');
+        let currentInput = '0';
+        let previousInput = '';
+        let operation = null;
+        let resetScreen = false;
+        
+        // Actualizar display
+        function updateDisplay() {
+            calcDisplay.textContent = currentInput;
+        }
+        
+        // Agregar número
+        function inputNumber(number) {
+            if (currentInput === '0' || resetScreen) {
+                currentInput = number;
+                resetScreen = false;
+            } else {
+                currentInput += number;
+            }
+            updateDisplay();
+        }
+        
+        // Agregar decimal
+        function inputDecimal() {
+            if (resetScreen) {
+                currentInput = '0.';
+                resetScreen = false;
+            } else if (!currentInput.includes('.')) {
+                currentInput += '.';
+            }
+            updateDisplay();
+        }
+        
+        // Manejar operaciones
+        function handleOperation(nextOperation) {
+            const inputValue = parseFloat(currentInput);
+            
+            if (operation !== null && !resetScreen) {
+                calculate();
+            }
+            
+            previousInput = currentInput;
+            operation = nextOperation;
+            resetScreen = true;
+        }
+        
+        // Calcular resultado
+        function calculate() {
+            let result;
+            const prevValue = parseFloat(previousInput);
+            const currentValue = parseFloat(currentInput);
+            
+            if (isNaN(prevValue) || isNaN(currentValue)) return;
+            
+            switch (operation) {
+                case '+':
+                    result = prevValue + currentValue;
+                    break;
+                case '-':
+                    result = prevValue - currentValue;
+                    break;
+                case '×':
+                    result = prevValue * currentValue;
+                    break;
+                case '÷':
+                    result = prevValue / currentValue;
+                    break;
+                case '%':
+                    result = prevValue % currentValue;
+                    break;
+                default:
+                    return;
+            }
+            
+            currentInput = result.toString();
+            operation = null;
+            previousInput = '';
+            updateDisplay();
+        }
+        
+        // Limpiar calculadora
+        function clearCalculator() {
+            currentInput = '0';
+            previousInput = '';
+            operation = null;
+            updateDisplay();
+        }
+        
+        // Borrar último dígito
+        function backspace() {
+            if (currentInput.length > 1) {
+                currentInput = currentInput.slice(0, -1);
+            } else {
+                currentInput = '0';
+            }
+            updateDisplay();
+        }
+        
+        // Event listeners para botones de la calculadora
+        document.querySelectorAll('.calc-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const value = button.textContent;
+                
+                if (!isNaN(value) || value === '0') {
+                    inputNumber(value);
+                } else if (value === '.') {
+                    inputDecimal();
+                } else if (value === 'C') {
+                    clearCalculator();
+                } else if (value === '⌫') {
+                    backspace();
+                } else if (value === '=') {
+                    calculate();
+                } else {
+                    handleOperation(value);
+                }
+            });
+        });
+        
+        // Código para el traductor
+        const inputText = document.getElementById('input-text');
+        const outputText = document.getElementById('output-text');
+        const translateBtn = document.getElementById('translate-btn');
+        const enToEsBtn = document.getElementById('en-to-es');
+        const esToEnBtn = document.getElementById('es-to-en');
+        let translationDirection = 'en-to-es';
+        
+        // Cambiar dirección de traducción
+        enToEsBtn.addEventListener('click', () => {
+            enToEsBtn.classList.add('active');
+            esToEnBtn.classList.remove('active');
+            translationDirection = 'en-to-es';
+            inputText.placeholder = 'Escribe el texto en inglés aquí...';
+            outputText.placeholder = 'La traducción al español aparecerá aquí...';
+        });
+        
+        esToEnBtn.addEventListener('click', () => {
+            esToEnBtn.classList.add('active');
+            enToEsBtn.classList.remove('active');
+            translationDirection = 'es-to-en';
+            inputText.placeholder = 'Escribe el texto en español aquí...';
+            outputText.placeholder = 'La traducción al inglés aparecerá aquí...';
+        });
+        
+        // Traducir texto
+        translateBtn.addEventListener('click', () => {
+            const text = inputText.value.trim();
+            
+            if (!text) {
+                outputText.value = '';
+                return;
+            }
+            
+            // Simulación de traducción (en una aplicación real, aquí se haría una llamada a una API)
+            let translatedText = '';
+            
+            if (translationDirection === 'en-to-es') {
+                // Traducciones básicas de ejemplo
+                const translations = {
+                    'hello': 'hola',
+                    'goodbye': 'adiós',
+                    'thank you': 'gracias',
+                    'please': 'por favor',
+                    'yes': 'sí',
+                    'no': 'no',
+                    'water': 'agua',
+                    'food': 'comida',
+                    'house': 'casa',
+                    'car': 'coche',
+                    'dog': 'perro',
+                    'cat': 'gato',
+                    'book': 'libro',
+                    'computer': 'computadora',
+                    'phone': 'teléfono'
+                };
+                
+                translatedText = text.split(' ').map(word => {
+                    const lowerWord = word.toLowerCase().replace(/[.,!?;:]$/, '');
+                    return translations[lowerWord] || word;
+                }).join(' ');
+            } else {
+                // Traducciones básicas de ejemplo
+                const translations = {
+                    'hola': 'hello',
+                    'adiós': 'goodbye',
+                    'gracias': 'thank you',
+                    'por favor': 'please',
+                    'sí': 'yes',
+                    'no': 'no',
+                    'agua': 'water',
+                    'comida': 'food',
+                    'casa': 'house',
+                    'coche': 'car',
+                    'perro': 'dog',
+                    'gato': 'cat',
+                    'libro': 'book',
+                    'computadora': 'computer',
+                    'teléfono': 'phone'
+                };
+                
+                translatedText = text.split(' ').map(word => {
+                    const lowerWord = word.toLowerCase().replace(/[.,!?;:]$/, '');
+                    return translations[lowerWord] || word;
+                }).join(' ');
+            }
+            
+            outputText.value = translatedText;
+        });
+        
+        // Código para la sopa de letras
+        const wordGrid = document.getElementById('word-grid');
+        const wordList = document.getElementById('word-list');
+        const foundCount = document.getElementById('found-count');
+        const totalWords = document.getElementById('total-words');
+        const timer = document.getElementById('timer');
+        const newGameBtn = document.getElementById('new-game-btn');
+        const hintBtn = document.getElementById('hint-btn');
+        const solveBtn = document.getElementById('solve-btn');
+        
+        let grid = [];
+        let words = [];
+        let foundWords = [];
+        let selectedCells = [];
+        let gameStarted = false;
+        let startTime;
+        let timerInterval;
+        
+        // Lista de palabras para la sopa de letras
+        const wordOptions = [
+            'JAVASCRIPT', 'HTML', 'CSS', 'PROGRAMACION', 'COMPUTADORA',
+            'INTERNET', 'NAVEGADOR', 'DESARROLLO', 'APLICACION', 'FUNCIONAL',
+            'CALCULADORA', 'TRADUCTOR', 'SOPA', 'LETRAS', 'JUEGO'
+        ];
+        
+        // Inicializar juego
+        function initGame() {
+            // Seleccionar 8 palabras aleatorias
+            words = [];
+            const shuffled = [...wordOptions].sort(() => 0.5 - Math.random());
+            words = shuffled.slice(0, 8);
+            
+            // Reiniciar variables del juego
+            foundWords = [];
+            selectedCells = [];
+            gameStarted = true;
+            
+            // Actualizar lista de palabras
+            updateWordList();
+            
+            // Crear cuadrícula
+            createGrid();
+            
+            // Colocar palabras en la cuadrícula
+            placeWords();
+            
+            // Rellenar espacios vacíos
+            fillEmptyCells();
+            
+            // Actualizar contadores
+            updateCounters();
+            
+            // Iniciar temporizador
+            startTimer();
+        }
+        
+        // Crear cuadrícula vacía
+        function createGrid() {
+            grid = Array(15).fill().map(() => Array(15).fill(''));
+            wordGrid.innerHTML = '';
+            
+            for (let i = 0; i < 15; i++) {
+                for (let j = 0; j < 15; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'grid-cell';
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    
+                    cell.addEventListener('mousedown', startSelection);
+                    cell.addEventListener('mouseenter', continueSelection);
+                    cell.addEventListener('mouseup', endSelection);
+                    
+                    wordGrid.appendChild(cell);
+                }
+            }
+        }
+        
+        // Colocar palabras en la cuadrícula
+        function placeWords() {
+            const directions = [
+                [0, 1],   // Horizontal derecha
+                [1, 0],   // Vertical abajo
+                [1, 1],   // Diagonal abajo derecha
+                [1, -1]   // Diagonal abajo izquierda
+            ];
+            
+            words.forEach(word => {
+                let placed = false;
+                let attempts = 0;
+                
+                while (!placed && attempts < 100) {
+                    attempts++;
+                    
+                    // Elegir dirección aleatoria
+                    const direction = directions[Math.floor(Math.random() * directions.length)];
+                    const dx = direction[0];
+                    const dy = direction[1];
+                    
+                    // Elegir posición inicial aleatoria
+                    const startX = Math.floor(Math.random() * 15);
+                    const startY = Math.floor(Math.random() * 15);
+                    
+                    // Verificar si la palabra cabe
+                    const endX = startX + dx * (word.length - 1);
+                    const endY = startY + dy * (word.length - 1);
+                    
+                    if (endX < 0 || endX >= 15 || endY < 0 || endY >= 15) {
+                        continue;
+                    }
+                    
+                    // Verificar que no haya superposición con otras palabras
+                    let canPlace = true;
+                    for (let i = 0; i < word.length; i++) {
+                        const x = startX + dx * i;
+                        const y = startY + dy * i;
+                        
+                        if (grid[x][y] !== '' && grid[x][y] !== word[i]) {
+                            canPlace = false;
+                            break;
+                        }
+                    }
+                    
+                    // Colocar la palabra si es posible
+                    if (canPlace) {
+                        for (let i = 0; i < word.length; i++) {
+                            const x = startX + dx * i;
+                            const y = startY + dy * i;
+                            grid[x][y] = word[i];
+                            
+                            // Actualizar celda en el DOM
+                            const cellIndex = x * 15 + y;
+                            wordGrid.children[cellIndex].textContent = word[i];
+                        }
+                        placed = true;
+                    }
+                }
+            });
+        }
+        
+        // Rellenar celdas vacías
+        function fillEmptyCells() {
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            
+            for (let i = 0; i < 15; i++) {
+                for (let j = 0; j < 15; j++) {
+                    if (grid[i][j] === '') {
+                        grid[i][j] = letters[Math.floor(Math.random() * letters.length)];
+                        
+                        // Actualizar celda en el DOM
+                        const cellIndex = i * 15 + j;
+                        wordGrid.children[cellIndex].textContent = grid[i][j];
+                    }
+                }
+            }
+        }
+        
+        // Actualizar lista de palabras
+        function updateWordList() {
+            wordList.innerHTML = '';
+            words.forEach(word => {
+                const wordItem = document.createElement('div');
+                wordItem.className = 'word-item';
+                wordItem.textContent = word;
+                wordItem.dataset.word = word;
+                wordList.appendChild(wordItem);
+            });
+            
+            totalWords.textContent = words.length;
+        }
+        
+        // Actualizar contadores
+        function updateCounters() {
+            foundCount.textContent = foundWords.length;
+        }
+        
+        // Iniciar temporizador
+        function startTimer() {
+            clearInterval(timerInterval);
+            startTime = new Date();
+            
+            timerInterval = setInterval(() => {
+                const currentTime = new Date();
+                const elapsedTime = Math.floor((currentTime - startTime) / 1000);
+                const minutes = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
+                const seconds = (elapsedTime % 60).toString().padStart(2, '0');
+                timer.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+        
+        // Selección de celdas
+        let isSelecting = false;
+        
+        function startSelection(e) {
+            if (!gameStarted) return;
+            
+            isSelecting = true;
+            selectedCells = [getCellIndex(e.target)];
+            updateSelection();
+        }
+        
+        function continueSelection(e) {
+            if (!isSelecting) return;
+            
+            const cellIndex = getCellIndex(e.target);
+            if (!selectedCells.includes(cellIndex)) {
+                selectedCells.push(cellIndex);
+                updateSelection();
+            }
+        }
+        
+        function endSelection() {
+            if (!isSelecting) return;
+            
+            isSelecting = false;
+            checkSelectedWord();
+            clearSelection();
+        }
+        
+        function getCellIndex(cell) {
+            const row = parseInt(cell.dataset.row);
+            const col = parseInt(cell.dataset.col);
+            return { row, col };
+        }
+        
+        function updateSelection() {
+            // Limpiar selección anterior
+            document.querySelectorAll('.grid-cell.selected').forEach(cell => {
+                cell.classList.remove('selected');
+            });
+            
+            // Aplicar nueva selección
+            selectedCells.forEach(cellIndex => {
+                const cell = document.querySelector(`.grid-cell[data-row="${cellIndex.row}"][data-col="${cellIndex.col}"]`);
+                if (cell) {
+                    cell.classList.add('selected');
+                }
+            });
+        }
+        
+        function clearSelection() {
+            selectedCells = [];
+            document.querySelectorAll('.grid-cell.selected').forEach(cell => {
+                cell.classList.remove('selected');
+            });
+        }
+        
+        // Verificar palabra seleccionada
+        function checkSelectedWord() {
+            if (selectedCells.length < 2) return;
+            
+            // Obtener la palabra formada por las celdas seleccionadas
+            let selectedWord = '';
+            selectedCells.forEach(cellIndex => {
+                selectedWord += grid[cellIndex.row][cellIndex.col];
+            });
+            
+            // Verificar si la palabra está en la lista
+            if (words.includes(selectedWord) && !foundWords.includes(selectedWord)) {
+                foundWords.push(selectedWord);
+                
+                // Marcar palabra como encontrada
+                document.querySelectorAll('.word-item').forEach(item => {
+                    if (item.dataset.word === selectedWord) {
+                        item.classList.add('found');
+                    }
+                });
+                
+                // Marcar celdas como encontradas
+                selectedCells.forEach(cellIndex => {
+                    const cell = document.querySelector(`.grid-cell[data-row="${cellIndex.row}"][data-col="${cellIndex.col}"]`);
+                    if (cell) {
+                        cell.classList.add('found');
+                    }
+                });
+                
+                updateCounters();
+                
+                // Verificar si se ganó el juego
+                if (foundWords.length === words.length) {
+                    clearInterval(timerInterval);
+                    setTimeout(() => {
+                        alert('¡Felicidades! Has encontrado todas las palabras.');
+                    }, 500);
+                }
+            }
+        }
+        
+        // Dar pista
+        hintBtn.addEventListener('click', () => {
+            if (!gameStarted) return;
+            
+            // Encontrar una palabra no encontrada
+            const remainingWords = words.filter(word => !foundWords.includes(word));
+            if (remainingWords.length === 0) return;
+            
+            const hintWord = remainingWords[Math.floor(Math.random() * remainingWords.length)];
+            alert(`Pista: La palabra "${hintWord}" está en la sopa de letras.`);
+        });
+        
+        // Resolver juego
+        solveBtn.addEventListener('click', () => {
+            if (!gameStarted) return;
+            
+            // Marcar todas las palabras como encontradas
+            words.forEach(word => {
+                if (!foundWords.includes(word)) {
+                    foundWords.push(word);
+                    
+                    // Marcar palabra como encontrada en la lista
+                    document.querySelectorAll('.word-item').forEach(item => {
+                        if (item.dataset.word === word) {
+                            item.classList.add('found');
+                        }
+                    });
+                }
+            });
+            
+            // Marcar todas las celdas de palabras como encontradas
+            // (En una implementación completa, aquí se marcarían las celdas correctas)
+            
+            updateCounters();
+            clearInterval(timerInterval);
+            alert('¡Juego resuelto! Has encontrado todas las palabras.');
+        });
+        
+        // Nuevo juego
+        newGameBtn.addEventListener('click', initGame);
+        
+        // Inicializar la aplicación
+        initGame();
+    </script>
+</body>
+</html>
